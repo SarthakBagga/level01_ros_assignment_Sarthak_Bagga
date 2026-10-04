@@ -1,11 +1,7 @@
 <?xml version="1.0" ?>
 <robot name="testbed" xmlns:xacro="http://www.ros.org/wiki/xacro" >
 
-<xacro:property name="body_color" value="Gazebo/Silver" />
-
-<gazebo>
-  <plugin name="control" filename="libgazebo_ros_control.so"/>
-</gazebo>
+<xacro:property name="body_color" value="Gazebo/Grey" />
 
   <gazebo>
     <plugin name="diff_drive_control" filename="libgazebo_ros_diff_drive.so">
@@ -37,7 +33,7 @@
       <update_rate>10</update_rate>
       <visualize>true</visualize>
       <plugin name="my_imu_plugin" filename="libgazebo_ros_imu_sensor.so">
-      <initial_orientation_as_reference>false</initial_orientation_as_reference>>
+      <initial_orientation_as_reference>false</initial_orientation_as_reference>
         <ros>
           <remapping>~/out:=imu</remapping>
         </ros>
@@ -62,7 +58,7 @@
         </scan>
         <range>
           <min>0.10</min>
-          <max>1.5</max>
+          <max>10.0</max>
           <resolution>0.01</resolution>
         </range>
         <noise>

@@ -3,8 +3,8 @@ import os
 import launch, launch_ros
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
-from launch.substitutions import LaunchConfiguration
-from launch.actions import IncludeLaunchDescription
+from launch.substitutions import LaunchConfiguration, PythonExpression
+from launch.actions import GroupAction, IncludeLaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from ament_index_python.packages import get_package_prefix
 from launch_ros.actions import Node
@@ -17,7 +17,8 @@ def generate_launch_description():
   gazebo = IncludeLaunchDescription(
     PythonLaunchDescriptionSource(
       os.path.join(pkg_testbed_gazebo, 'launch', 'spawn_playground.launch.py'),
-    )
+    ),
+    launch_arguments={'pause': 'true'}.items(),
   ) 
   
   state_pub = IncludeLaunchDescription(
@@ -29,7 +30,10 @@ def generate_launch_description():
   spawn = IncludeLaunchDescription(
     PythonLaunchDescriptionSource(
       os.path.join(pkg_testbed_gazebo, 'launch', 'spawn_testbed.launch.py'),
-    )
+    ),
+    launch_arguments={'unpause': PythonExpression([
+      "'", LaunchConfiguration('pause'), "'.lower() not in ('true', '1')"
+    ])}.items(),
   )
   
   rviz_config_dir = os.path.join(
@@ -45,10 +49,14 @@ def generate_launch_description():
   )
 
   return LaunchDescription([
+    launch.actions.DeclareLaunchArgument(
+      'pause', default_value='false',
+      description='Keep simulation paused after spawning the robot'),
     launch.actions.DeclareLaunchArgument(name='rvizconfig', default_value=rviz_config_dir,
                                             description='Absolute path to rviz config file'),
     state_pub,
-    gazebo,
+    # Scope Gazebo's initial pause so the user's final pause choice is retained.
+    GroupAction([gazebo]),
     spawn,
     rviz_node,
   ])
