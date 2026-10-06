@@ -1,15 +1,14 @@
 # ROS 2 Humble, Testbed-specific baseline. Navigation launch must load this with
 # ParameterFile(..., allow_substs=True) to resolve the installed stock BT paths.
-# Map server and AMCL keep their separate configuration/lifecycle managers.
 planner_server:
   ros__parameters:
     use_sim_time: true
     expected_planner_frequency: 1.0  # Stock BT replans at 1 Hz; this is a warning threshold.
-    planner_plugins: [GridBased]  # Must match ComputePathToPose in the stock BT.
+    planner_plugins: [GridBased]
     GridBased:
       plugin: nav2_navfn_planner/NavfnPlanner
       tolerance: 0.15  # Permit a nearby endpoint within three 5 cm map cells.
-      use_astar: false  # Start with NavFn's standard Dijkstra search.
+      use_astar: false
       allow_unknown: false  # The supplied map is observed; avoid planning into unknown space.
 
 controller_server:
@@ -18,11 +17,11 @@ controller_server:
     odom_topic: /odom
     controller_frequency: 10.0  # Conservative CPU load; scan ~30 Hz, odometry ~100 Hz.
     min_x_velocity_threshold: 0.001
-    min_y_velocity_threshold: 0.001  # No lateral motion; filter only numerical odometry noise.
+    min_y_velocity_threshold: 0.001
     min_theta_velocity_threshold: 0.001
     progress_checker_plugin: progress_checker  # Humble uses the singular parameter.
     goal_checker_plugins: [goal_checker]
-    controller_plugins: [FollowPath]  # Must match FollowPath in the stock BT.
+    controller_plugins: [FollowPath]
     progress_checker:
       plugin: nav2_controller::SimpleProgressChecker
       required_movement_radius: 0.10  # Detect useful translation at the selected low speed.
@@ -30,17 +29,17 @@ controller_server:
     goal_checker:
       plugin: nav2_controller::SimpleGoalChecker
       xy_goal_tolerance: 0.15  # Three map cells; do not demand sub-cell localization accuracy.
-      yaw_goal_tolerance: 0.15  # About 8.6 degrees; practical first-test heading accuracy.
-      stateful: true  # Once XY tolerance is reached, finish the heading adjustment.
+      yaw_goal_tolerance: 0.15
+      stateful: true
     FollowPath:
       plugin: nav2_regulated_pure_pursuit_controller::RegulatedPurePursuitController
       desired_linear_vel: 0.10  # Low initial cruise speed, versus the plugin's 0.5 m/s default.
       lookahead_dist: 0.40  # Slightly longer than the 0.36 m chassis footprint length.
-      use_velocity_scaled_lookahead_dist: false  # Fixed lookahead simplifies initial testing.
+      use_velocity_scaled_lookahead_dist: false
       rotate_to_heading_angular_vel: 0.30  # Slow differential-drive alignment, below default 1.8.
       max_angular_accel: 0.50  # Limit heading-alignment acceleration without a velocity smoother.
       use_rotate_to_heading: true
-      rotate_to_heading_min_angle: 0.785  # Retain the plugin's ~45 degree alignment threshold.
+      rotate_to_heading_min_angle: 0.785
       allow_reversing: false  # RPP heading rotation and reversing are mutually exclusive.
       transform_tolerance: 0.30  # Allow modest TF scheduling lag in software-rendered simulation.
       min_approach_linear_velocity: 0.03  # Slow final approach without demanding near-zero tracking.
@@ -52,7 +51,7 @@ controller_server:
       regulated_linear_scaling_min_speed: 0.03  # Keep regulation below the 0.10 m/s cruise speed.
       use_cost_regulated_linear_velocity_scaling: true
       cost_scaling_dist: 0.30  # Slow near obstacles, inside the 0.50 m inflation region.
-      cost_scaling_gain: 1.0  # Retain the Humble baseline gain until runtime tests justify change.
+      cost_scaling_gain: 1.0
       inflation_cost_scaling_factor: 3.0  # Must equal the local InflationLayer's factor.
 
 local_costmap:
@@ -67,7 +66,7 @@ local_costmap:
       height: 4
       resolution: 0.05  # Match the supplied occupancy grid instead of resampling finer.
       update_frequency: 5.0  # At 0.10 m/s the robot travels 2 cm between updates.
-      publish_frequency: 2.0  # Visualization need not run at the internal update rate.
+      publish_frequency: 2.0
       # Collision STL bounds after 0.001 scale and URDF transforms:
       # x [-0.22570, 0.12430], y [-0.24076, 0.16524]. Origin is NOT at the center.
       footprint: "[[-0.23,-0.25],[0.13,-0.25],[0.13,0.17],[-0.23,0.17]]"
@@ -83,7 +82,7 @@ local_costmap:
           marking: true
           clearing: true
           inf_is_valid: true  # Gazebo +inf means no hit; allow it to clear to the sensor limit.
-          max_obstacle_height: 0.50  # Sensor is ~0.228 m high; this is a planar scan.
+          max_obstacle_height: 0.50
           obstacle_min_range: 0.10  # Match the simulated LiDAR minimum.
           obstacle_max_range: 9.5  # Reserve the last 0.5 m of the 10 m sensor range for clearing.
           raytrace_min_range: 0.10
@@ -92,7 +91,7 @@ local_costmap:
         plugin: nav2_costmap_2d::InflationLayer
         inflation_radius: 0.50  # Soft clearance costs outside the actual collision footprint.
         cost_scaling_factor: 3.0  # Moderate initial decay; shared with RPP's cost regulation.
-      always_send_full_costmap: true  # Simplify visualization/debugging of this small grid.
+      always_send_full_costmap: true
 
 global_costmap:
   global_costmap:
@@ -105,7 +104,7 @@ global_costmap:
       resolution: 0.05
       update_frequency: 2.0  # Refresh scan obstacles faster than the stock 1 Hz replan cycle.
       publish_frequency: 1.0
-      track_unknown_space: true  # Preserve unknown cells; NavFn is configured not to traverse them.
+      track_unknown_space: true
       footprint: "[[-0.23,-0.25],[0.13,-0.25],[0.13,0.17],[-0.23,0.17]]"
       footprint_padding: 0.01
       plugins: [static_layer, obstacle_layer, inflation_layer]
@@ -152,7 +151,7 @@ behavior_server:
       plugin: nav2_behaviors/Wait
     simulate_ahead_time: 2.0  # Collision-check recovery motion ahead before issuing commands.
     max_rotational_vel: 0.30  # Match conservative controller heading alignment speed.
-    min_rotational_vel: 0.10  # Already exercised safely in the manual localization test.
+    min_rotational_vel: 0.10
     rotational_acc_lim: 0.50
 
 bt_navigator:
@@ -171,7 +170,6 @@ bt_navigator:
     # Only NavigateToPose is supported/tested by this assignment configuration.
     default_nav_through_poses_bt_xml: "$(find-pkg-share nav2_bt_navigator)/behavior_trees/navigate_to_pose_w_replanning_and_recovery.xml"
     # Exactly the 11 non-built-in node types appearing in the selected stock XML.
-    # Sequence/ReactiveFallback are BehaviorTree.CPP built-ins and need no library.
     plugin_lib_names:
       - nav2_compute_path_to_pose_action_bt_node
       - nav2_follow_path_action_bt_node

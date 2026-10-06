@@ -13,8 +13,8 @@
   <exec_depend>launch_ros</exec_depend>
   <exec_depend>testbed_bringup</exec_depend>
   <exec_depend>rviz2</exec_depend>
+  <exec_depend>nav2_rviz_plugins</exec_depend>
 
-  <!-- Selected servers and plugins for the subsequent implementation. -->
   <exec_depend>nav2_map_server</exec_depend>
   <exec_depend>nav2_amcl</exec_depend>
   <exec_depend>nav2_lifecycle_manager</exec_depend>

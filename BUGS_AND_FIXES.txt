@@ -1,0 +1,111 @@
+Verified starter-code defects and fixes
+
+DEFECTS FOUND
+
+1. File/location: testbed_description/CMakeLists.txt, final statement.
+   Symptom/impact: Invalid CMake syntax; package cannot configure as written.
+   Root cause: Bare "ament_package" instead of a function invocation.
+   Change: Replaced with ament_package().
+   Verification: Clean Humble colcon build completed all three packages.
+
+2. File/location: testbed_bringup/maps/testbed_world.yaml, image field.
+   Symptom/impact: Referenced image does not exist in the supplied map directory.
+   Root cause: Placeholder filename wrong_path_testbed_world.pgm.
+   Change: Set image to testbed_world.pgm, relative to the YAML.
+   Verification: Referenced supplied PGM exists; YAML/PGM are installed together.
+   No map-server failure was observed or claimed.
+
+3. File/location: testbed_bringup/CMakeLists.txt, install(DIRECTORY ...).
+   Symptom/impact: Supplied maps omitted from installed package resources.
+   Root cause: Only launch directory was installed.
+   Change: Added maps to the directory installation.
+   Verification: Successful build; installed YAML and PGM paths checked.
+
+4. File/location: testbed_gazebo/CMakeLists.txt, install(DIRECTORY ...).
+   Symptom/impact: Installed models path exposed by launch had no installed models.
+   Root cause: Models directory omitted from installation.
+   Change: Added models to the directory installation.
+   Verification: Successful build; installed model.sdf/model.config paths checked.
+   No failure to load the playground world was observed.
+
+5. File/location: testbed_description/launch/robot_description.launch.py.
+   Symptom/impact: Simulation state publisher defaulted to wall time.
+   Root cause: use_sim_time was omitted from its node parameters.
+   Change: Explicitly set use_sim_time to True.
+   Verification: Runtime parameter returned True; required TF chain was present.
+   A pre-fix TF failure was not demonstrated.
+
+6. File/location: testbed_description/urdf/testbed.gazebo, IMU plugin parameter.
+   Symptom/impact: Stray literal '>' text after initial_orientation_as_reference.
+   Root cause: Extra character following the closing XML tag.
+   Change: Removed that character.
+   Verification: XML parses and the IMU plugin appears in the runtime node list.
+   Original XML also parsed; no IMU failure is attributed to this character.
+
+7. File/location: testbed_description, testbed_bringup, testbed_gazebo/package.xml.
+   Symptom/impact: Direct launch/runtime and bringup build requirements undeclared.
+   Root cause: Missing declarations for imports, executables and CMake rclpy lookup.
+   Change: Added direct exec_depend entries for launch, launch_ros,
+   ament_index_python and each package's used Xacro/publishers/RViz/Gazebo/includes.
+   Startup fix additionally declares ros2cli, ros2service and std_srvs.
+   Final audit declares rclpy as a bringup build dependency: CMake requires it.
+   Verification: Launch-to-manifest audit, dependency check and Humble build.
+   No missing-dependency failure in the prepared container is claimed.
+
+RUNTIME-OBSERVED DEFECTS
+
+8. File/location: testbed_description/urdf/testbed.gazebo, ray/range/max.
+   Symptom/impact: At spawn (0,5,0), every one of 30 scans had 0/300 usable returns.
+   Root cause: 1.5 m range misses the observed surrounding obstacle distances.
+   Change: Increased simulated maximum range to 10.0 m.
+   Verification: Repeated 30-scan measurement gave 222/300 usable returns per scan,
+   approximately 3.38-10 m. No localization success/failure is claimed.
+
+9. File/location: testbed_description/urdf/testbed.gazebo, control plugin.
+   Symptom/impact: Gazebo logged failure to load libgazebo_ros_control.so.
+   Root cause: Referenced library is unavailable in the tested Humble environment.
+   Change: Removed only this unnecessary plugin declaration.
+   Verification: No plugin-load failure after removal; diff_drive_control still
+   accepts /cmd_vel, publishes /odom and odom->base_footprint, and moves the robot.
+   No controller conflict was observed or claimed.
+
+10. File/location: testbed_bringup/launch/testbed_full_bringup.launch.py and
+    testbed_gazebo/launch/spawn_testbed.launch.py, startup ordering.
+    Symptom/impact: Intermittent gzserver SIGSEGV immediately after robot spawn;
+    /clock, /odom and /scan publishers disappear when the server dies.
+    Root cause: GDB located the crash in ODE dSpaceCollide2 via
+    ODEMultiRayShape::UpdateRays / RaySensor::UpdateImpl during insertion.
+    Concurrent insertion/ray updating is the supported timing diagnosis; the
+    internal Gazebo memory fault has not been isolated to a source-code line.
+    Change: Start Gazebo paused in a scoped launch group. On successful spawn
+    process exit, call /unpause_physics and wait for its response. On spawn error,
+    shut down. Preserve pause:=true for intentional paused inspection.
+    Verification: 10/10 repeated full starts automatically unpaused and produced
+    30 advancing scans plus odometry each, without crashes. Motion/TF also passed.
+    No fixed sleep in launch; finite repeat testing is not a universal guarantee.
+
+11. File/location: testbed_gazebo/launch/spawn_playground.launch.py, model path.
+    Symptom/impact: Gazebo GUI logged Missing model.config for ament_index,
+    colcon-core and testbed_description directories.
+    Root cause: Entire description package share directory treated as model root.
+    Change: Add only the supplied installed models directory to GAZEBO_MODEL_PATH;
+    retain any existing model paths. World argument is unchanged.
+    Verification: Playground world still loads; those model.config errors absent.
+
+12. File/location: testbed_description/urdf/testbed.gazebo, body_color property.
+    Symptom/impact: GUI logged Unable to get Material[Gazebo/Silver]; white fallback.
+    Root cause: Gazebo/Silver is absent from the installed Gazebo material script.
+    Change: Use the existing Gazebo/Grey material.
+    Verification: Installed definition checked; missing-material warnings absent.
+
+Verification notes:
+- Original and updated launches load testbed_playground.world; no world bug listed.
+- Audio-device absence is a container limitation, not a verified starter defect.
+- IMU noise-index warnings were observed, but no sensor malfunction was proven;
+  they are not asserted as a fixed defect here.
+- Starter repair build: all 3 packages passed (2.33 s); rosdep check passed.
+- Final four-package clean-install audit is recorded in SUBMISSION_AUDIT.md.
+- Post-fix motion: 0.05 m/s for 2 simulated seconds moved 0.10003 m, then zero
+  Twist stopped the command. view_frames confirmed the required navigation TF.
+- pause:=true retained the exact (0,5,0,0,0,0) pose and made no automatic unpause
+  call; manual /unpause_physics then restored advancing scans.

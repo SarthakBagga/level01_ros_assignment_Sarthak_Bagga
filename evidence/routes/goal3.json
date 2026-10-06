@@ -1,0 +1,93 @@
+{
+  "run": "goal3",
+  "goal": [
+    0.0,
+    2.0,
+    0.0
+  ],
+  "before": {
+    "pose": [
+      -3.9786563529577728,
+      2.1477502343401778,
+      -1.7442723951197194
+    ],
+    "alignment": {
+      "finite_beams": 262,
+      "mean_wall_distance_m": 0.09027538919974347,
+      "fraction_within_0_15m": 0.7557251908396947
+    },
+    "costmaps": {
+      "local_costmap": {
+        "width": 80,
+        "height": 80,
+        "frame": "odom",
+        "nonzero_cells": 0,
+        "lethal_cells": 0,
+        "max_nonzero_cells": 1487
+      },
+      "global_costmap": {
+        "width": 405,
+        "height": 400,
+        "frame": "map",
+        "nonzero_cells": 53583,
+        "lethal_cells": 21423,
+        "max_nonzero_cells": 55764
+      }
+    }
+  },
+  "final_pose": [
+    -0.09754904177479894,
+    2.1151408700815617,
+    -0.17382750993900214
+  ],
+  "position_error_m": 0.15090803661276805,
+  "yaw_error_rad": 0.17382750993900214,
+  "plan_messages": 85,
+  "first_plan": {
+    "frame": "map",
+    "length_m": 5.719400343132555,
+    "all_points_inside_map": true,
+    "min_conservative_clearance_m": 0.09023471581561925
+  },
+  "all_plans_in_map": true,
+  "minimum_plan_clearance_m": 0.06789609852320305,
+  "odom_travel_m": 5.986944386206949,
+  "nonzero_cmd_messages": 875,
+  "max_linear_mps": 0.1,
+  "max_angular_radps": 0.3,
+  "last_cmd": [
+    0.0,
+    0.0
+  ],
+  "safety_samples": 892,
+  "minimum_map_footprint_clearance_lower_bound_m": 0.11396968983339827,
+  "minimum_scan_footprint_clearance_lower_bound_m": 0.28650771162086136,
+  "tf_probe_misses": 11,
+  "final_alignment": {
+    "finite_beams": 240,
+    "mean_wall_distance_m": 0.06837392964960566,
+    "fraction_within_0_15m": 0.8166666666666667
+  },
+  "costmaps": {
+    "local_costmap": {
+      "width": 80,
+      "height": 80,
+      "frame": "odom",
+      "nonzero_cells": 0,
+      "lethal_cells": 0,
+      "max_nonzero_cells": 1487
+    },
+    "global_costmap": {
+      "width": 405,
+      "height": 400,
+      "frame": "map",
+      "nonzero_cells": 53583,
+      "lethal_cells": 21423,
+      "max_nonzero_cells": 55764
+    }
+  },
+  "map_cell_quantization_allowance_m": 0.07071067811865477,
+  "max_trajectory_sampling_gap_s": 0.11599851699975261,
+  "maximum_plan_point_spacing_m": 0.07071067917232597,
+  "continuous_plan_clearance_lower_bound_m": 0.03254075893704007
+}

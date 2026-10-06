@@ -128,3 +128,9 @@ We’re excited to see how you approach this task. Good luck, and happy coding! 
  - Name: Sarthak Bagga
  - Contact number: 8882411951
  - Email Address: sarthak.bagga2005@gmail.com
+
+## Solution and review
+
+See [testbed_navigation](testbed_navigation/README.md) for build, startup and goal
+commands, [starter fixes](BUGS_AND_FIXES.txt), [evidence](evidence/README.md), and
+the [final submission audit](SUBMISSION_AUDIT.md), including unresolved checks.

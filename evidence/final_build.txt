@@ -1,0 +1,18 @@
+Final isolated ROS 2 Humble build
+Base environment: /opt/ros/humble; no workspace overlay sourced.
+Command (container, cwd /workspace):
+colcon --log-base /tmp/final-submission-audit-v2/log build --build-base /tmp/final-submission-audit-v2/build --install-base /tmp/final-submission-audit-v2/install
+
+Starting >>> testbed_description
+Finished <<< testbed_description [1.49s]
+Starting >>> testbed_gazebo
+Finished <<< testbed_gazebo [1.28s]
+Starting >>> testbed_bringup
+Finished <<< testbed_bringup [1.38s]
+Starting >>> testbed_navigation
+Finished <<< testbed_navigation [1.31s]
+Summary: 4 packages finished [5.95s]
+
+Earlier isolated copied install: no resource symlinks, all four share directories
+resolved, supplied YAML/PGM present, installed Xacro expanded successfully.
+rosdep check: All system dependencies have been satisfied.

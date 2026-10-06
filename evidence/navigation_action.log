@@ -1,0 +1,27 @@
+1791322927.181786 [42]       ros2: selected interface "lo" is not multicast-capable: disabling multicast
+Waiting for an action server to become available...
+Sending goal:
+     pose:
+  header:
+    stamp:
+      sec: 0
+      nanosec: 0
+    frame_id: map
+  pose:
+    position:
+      x: -4.0
+      y: 3.6
+      z: 0.0
+    orientation:
+      x: 0.0
+      y: 0.0
+      z: -0.7071067811865475
+      w: 0.7071067811865476
+behavior_tree: ''
+
+Goal accepted with ID: f054aeb8efc44c83bffd975632af04d6
+
+Result:
+    result: {}
+
+Goal finished with status: SUCCEEDED

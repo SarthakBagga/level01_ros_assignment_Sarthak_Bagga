@@ -1,0 +1,52 @@
+[INFO] [launch]: All log files can be found below /home/developer/.ros/log/2026-10-06-22-12-40-139214-morpheus-6257
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [map_server-1]: process started with pid [6258]
+[INFO] [lifecycle_manager-2]: process started with pid [6260]
+[lifecycle_manager-2] 1791324760.315936 [43] lifecycle_: selected interface "lo" is not multicast-capable: disabling multicast
+[lifecycle_manager-2] [INFO] [1791324760.327257605] [lifecycle_manager_map]: Creating
+[lifecycle_manager-2] [INFO] [1791324760.332028933] [lifecycle_manager_map]: [34m[1mCreating and initializing lifecycle service clients[0m[0m
+[map_server-1] 1791324760.349225 [43] map_server: selected interface "lo" is not multicast-capable: disabling multicast
+[map_server-1] [INFO] [1791324760.363211636] [map_server]: 
+[map_server-1] 	map_server lifecycle node launched. 
+[map_server-1] 	Waiting on external lifecycle transitions to activate
+[map_server-1] 	See https://design.ros2.org/articles/node_lifecycle.html for more information.
+[map_server-1] [INFO] [1791324760.363436623] [map_server]: Creating
+[lifecycle_manager-2] [INFO] [1791324760.363427758] [lifecycle_manager_map]: [34m[1mStarting managed nodes bringup...[0m[0m
+[lifecycle_manager-2] [INFO] [1791324760.363508378] [lifecycle_manager_map]: [34m[1mConfiguring map_server[0m[0m
+[map_server-1] [INFO] [1791324760.377677606] [map_server]: Configuring
+[map_server-1] [INFO] [1791324760.377893651] [map_io]: Loading yaml file: /tmp/final-submission-audit-v2/install/testbed_bringup/share/testbed_bringup/maps/testbed_world.yaml
+[map_server-1] [INFO] [1791324760.378563813] [map_io]: resolution: 0.05
+[map_server-1] [INFO] [1791324760.378592191] [map_io]: origin[0]: -10.2
+[map_server-1] [INFO] [1791324760.378604868] [map_io]: origin[1]: -9.94
+[map_server-1] [INFO] [1791324760.378615649] [map_io]: origin[2]: 0
+[map_server-1] [INFO] [1791324760.378626910] [map_io]: free_thresh: 0.25
+[map_server-1] [INFO] [1791324760.378638597] [map_io]: occupied_thresh: 0.65
+[map_server-1] [INFO] [1791324760.378650714] [map_io]: mode: trinary
+[map_server-1] [INFO] [1791324760.378663470] [map_io]: negate: 0
+[map_server-1] [INFO] [1791324760.379031813] [map_io]: Loading image_file: /tmp/final-submission-audit-v2/install/testbed_bringup/share/testbed_bringup/maps/testbed_world.pgm
+[map_server-1] [INFO] [1791324760.420683049] [map_io]: Read map /tmp/final-submission-audit-v2/install/testbed_bringup/share/testbed_bringup/maps/testbed_world.pgm: 405 X 400 map @ 0.05 m/cell
+[lifecycle_manager-2] [INFO] [1791324760.427869409] [lifecycle_manager_map]: [34m[1mActivating map_server[0m[0m
+[map_server-1] [INFO] [1791324760.429173893] [map_server]: Activating
+[map_server-1] [INFO] [1791324760.429465342] [map_server]: Creating bond (map_server) to lifecycle manager.
+[lifecycle_manager-2] [INFO] [1791324760.532028311] [lifecycle_manager_map]: Server map_server connected with bond.
+[lifecycle_manager-2] [INFO] [1791324760.532113572] [lifecycle_manager_map]: [34m[1mManaged nodes are active[0m[0m
+[lifecycle_manager-2] [INFO] [1791324760.532148286] [lifecycle_manager_map]: [34m[1mCreating bond timer...[0m[0m
+[WARNING] [launch]: user interrupted with ctrl-c (SIGINT)
+[WARNING] [launch]: user interrupted with ctrl-c (SIGINT) again, ignoring...
+[INFO] [lifecycle_manager-2]: sending signal 'SIGINT' to process[lifecycle_manager-2]
+[INFO] [map_server-1]: sending signal 'SIGINT' to process[map_server-1]
+[lifecycle_manager-2] [INFO] [1791324779.644303291] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[lifecycle_manager-2] [INFO] [1791324779.644592767] [lifecycle_manager_map]: Running Nav2 LifecycleManager rcl preshutdown (lifecycle_manager_map)
+[lifecycle_manager-2] [INFO] [1791324779.644784412] [lifecycle_manager_map]: [34m[1mTerminating bond timer...[0m[0m
+[map_server-1] [INFO] [1791324779.644349683] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[map_server-1] [INFO] [1791324779.644711317] [map_server]: Running Nav2 LifecycleNode rcl preshutdown (map_server)
+[map_server-1] [INFO] [1791324779.644896672] [map_server]: Deactivating
+[map_server-1] [INFO] [1791324779.644952037] [map_server]: Destroying bond (map_server) to lifecycle manager.
+[map_server-1] [INFO] [1791324779.655291599] [map_server]: Cleaning up
+[map_server-1] [INFO] [1791324779.655453729] [map_server]: Destroying bond (map_server) to lifecycle manager.
+[map_server-1] [INFO] [1791324779.655814326] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[lifecycle_manager-2] [INFO] [1791324779.659174321] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[map_server-1] [INFO] [1791324779.746578919] [map_server]: Destroying
+[lifecycle_manager-2] [INFO] [1791324779.747898217] [lifecycle_manager_map]: Destroying lifecycle_manager_map
+[INFO] [lifecycle_manager-2]: process has finished cleanly [pid 6260]
+[INFO] [map_server-1]: process has finished cleanly [pid 6258]

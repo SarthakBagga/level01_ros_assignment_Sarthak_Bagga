@@ -1,0 +1,66 @@
+{
+  "goal": [
+    -4.0,
+    3.6,
+    -1.5707963267948966
+  ],
+  "before": {
+    "pose": [
+      -4.041672322287194,
+      4.366730725483701,
+      1.3462856483990018
+    ],
+    "alignment": {
+      "finite_beams": 238,
+      "mean_wall_distance_m": 0.18965954206611835,
+      "fraction_within_0_15m": 0.42436974789915966
+    },
+    "costmaps": {
+      "local_costmap": {
+        "width": 80,
+        "height": 80,
+        "frame": "odom",
+        "nonzero_cells": 439,
+        "lethal_cells": 91,
+        "max_nonzero_cells": 439
+      },
+      "global_costmap": {
+        "width": 405,
+        "height": 400,
+        "frame": "map",
+        "nonzero_cells": 55040,
+        "lethal_cells": 22623,
+        "max_nonzero_cells": 55040
+      }
+    }
+  },
+  "final_pose": [
+    -3.9526403188571275,
+    3.782400239384851,
+    -1.7319388863392766
+  ],
+  "position_error_m": 0.18844836620572086,
+  "yaw_error_rad": 0.16114255954438003,
+  "plan_messages": 29,
+  "odom_travel_m": 1.032317470343228,
+  "nonzero_cmd_messages": 291,
+  "max_linear_mps": 0.1,
+  "max_angular_radps": 0.3,
+  "last_cmd": [
+    0.0,
+    0.0
+  ],
+  "final_alignment": {
+    "finite_beams": 193,
+    "mean_wall_distance_m": 0.16687762892453026,
+    "fraction_within_0_15m": 0.5958549222797928
+  },
+  "action_id": "f054aeb8efc44c83bffd975632af04d6",
+  "action_result": "SUCCEEDED",
+  "localization_screenshot_alignment": {
+    "finite_beams": 242,
+    "mean_wall_distance_m": 0.04079575798718554,
+    "fraction_within_0_15m": 0.9752066115702479,
+    "stage": "Earlier pre-navigation capture check; separate from the later recorded goal."
+  }
+}

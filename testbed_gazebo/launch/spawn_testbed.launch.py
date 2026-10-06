@@ -11,22 +11,13 @@ from launch.events import Shutdown
 from launch.substitutions import LaunchConfiguration
 
 
-# this is the function launch  system will look for
 def generate_launch_description():
-
-
-    # Position and orientation
-    # [X, Y, Z]
     position = [0.0, 5.0, 0.0]
-    # [Roll, Pitch, Yaw]
     orientation = [0.0, 0.0, 0.0]
-    # Base Name or robot
     robot_base_name = "testbed"
 
 
-    entity_name = robot_base_name#+"-"+str(int(random.random()*100000))
-
-    # Spawn ROBOT Set Gazebo
+    entity_name = robot_base_name
     spawn_robot = Node(
         package='gazebo_ros',
         executable='spawn_entity.py',
